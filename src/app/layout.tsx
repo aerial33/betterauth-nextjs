@@ -1,3 +1,5 @@
+import { Toaster } from "sonner";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -25,6 +27,7 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <Navbar />
         {children}
+        <Toaster />
       </body>
     </html>
   );

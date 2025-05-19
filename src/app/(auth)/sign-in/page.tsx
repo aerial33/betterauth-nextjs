@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { useForm } from "react-hook-form";
@@ -18,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { signInSchema } from "@/lib/auth-schema";
 
 export default function SignInPage() {
@@ -29,8 +31,27 @@ export default function SignInPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof signInSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof signInSchema>) {
+    const { email, password } = values;
+    const { data, error } = await authClient.signIn.email(
+      {
+        email,
+        password,
+        callbackURL: "/dashboard",
+      },
+      {
+        onSuccess: () => {
+          toast(
+            "Connexion réussie, vous allez être redirigé vers votre espace"
+          );
+          form.reset();
+        },
+        onError: (ctx) => {
+          toast(ctx.error.message);
+          console.log(ctx.error.message);
+        },
+      }
+    );
   }
   return (
     <AuthCard

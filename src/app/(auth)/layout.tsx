@@ -4,13 +4,10 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    console.log("Database:", process.env.DATABASE_URL),
-    (
-      <main>
-        <div className="flex h-screen flex-col items-center justify-center">
-          {children}
-        </div>
-      </main>
-    )
+    <main>
+      <div className="flex h-screen flex-col items-center justify-center">
+        {children}
+      </div>
+    </main>
   );
 }

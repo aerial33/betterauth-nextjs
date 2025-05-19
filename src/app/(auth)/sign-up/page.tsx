@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { useForm } from "react-hook-form";
@@ -18,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { authSchema } from "@/lib/auth-schema";
 
 export default function SignUpPage() {
@@ -30,9 +32,30 @@ export default function SignUpPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof authSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof authSchema>) {
+    const { name, email, password } = values;
+    const { data, error } = await authClient.signUp.email(
+      {
+        email, // user email address
+        password, // user password -> min 8 characters by default
+        name,
+        callbackURL: "/sign-in",
+      },
+      {
+        onSuccess: () => {
+          toast(
+            "Inscription réussie, vérifiez votre email pour confirmer votre compte"
+          );
+          form.reset();
+        },
+        onError: (ctx) => {
+          toast(ctx.error.message);
+          console.log(ctx.error.message);
+        },
+      }
+    );
   }
+
   return (
     <AuthCard
       title="Créer un compte"
