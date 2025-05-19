@@ -4,10 +4,10 @@ import { buttonVariants } from "./ui/button";
 
 const Navbar = () => {
   return (
-    <div className="border-b px-4">
+    <div className="border-b px-4 shadow">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between">
         <Link href="/">
-          <h1 className="text-xl font-bold">UD logo</h1>
+          <h1 className="text-xl font-bold">Your logo</h1>
         </Link>
         <div>
           <Link
