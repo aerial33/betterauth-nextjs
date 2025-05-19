@@ -1,16 +1,12 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { auth } from "@/lib/auth";
+import { getUser } from "@/lib/auth-lib/auth-session";
 
 const dashboard = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  if (!session) {
+  const user = await getUser();
+  if (!user) {
     return redirect("/");
   }
-  const user = session?.user;
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <h1 className="text-4xl font-bold">Dashboard</h1>

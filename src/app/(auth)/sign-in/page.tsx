@@ -19,8 +19,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
-import { signInSchema } from "@/lib/auth-schema";
+import { authClient } from "@/lib/auth-lib/auth-client";
+import { signInSchema } from "@/lib/auth-lib/auth-schema";
 
 export default function SignInPage() {
   const form = useForm<z.infer<typeof signInSchema>>({
